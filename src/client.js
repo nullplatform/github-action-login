@@ -1,10 +1,10 @@
 const http = require('@actions/http-client');
-const config = require('config');
+const config = require('./config');
 
 class HttpClient {
     constructor() {
         this.client = new http.HttpClient();
-        this.baseUrl = config.get('nullplatform.baseUrl');
+        this.baseUrl = config.baseUrl;
     }
 
     async post(url, body) {

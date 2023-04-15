@@ -1,9 +1,15 @@
 name: 'Nullplatform Login'
 description: 'Github Action to automate the login process on Nullplatform'
 inputs:
-  token:
+  access-key:
+    description: 'access key'
+    required: false
+  secret-access-key:
+    description: 'secret access key'
+    required: false
+  access-token:
     description: 'encoded access token'
-    required: true
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'
