@@ -1,9 +1,7 @@
 const dotenv = require('dotenv');
 const core = require('@actions/core');
 const HttpClient = require('./client');
-const { decode } = require('./base64');
 const { isEmpty } = require('./validate');
-const { parse } = require('./json');
 
 dotenv.config();
 
@@ -12,20 +10,41 @@ const TOKEN_VARIABLE_NAME = 'NULLPLATFORM_ACCESS_TOKEN';
 async function run() {
   try {
     const client = new HttpClient();
-    const encodedToken = core.getInput('token');
-    if (isEmpty(encodedToken)) {
-      core.setFailed('Input "token" cannot be empty');
+
+    const accessKey = core.getInput('access-key');
+    const secretAccessKey = core.getInput('secret-access-key');
+    const accessToken = core.getInput('access-token');
+
+    core.info('Validating inputs...');
+
+    if (isEmpty(accessToken) && isEmpty(accessKey)) {
+      core.setFailed('Input "access-key" cannot be empty');
     }
-    const decodedToken = decode(encodedToken);
-    const { client_id: clientId, client_secret: clientSecret } = parse(decodedToken);
-    if (isEmpty(clientId) || isEmpty(clientSecret)) {
-      core.setFailed('Input "token" is invalid');
+    if (isEmpty(accessToken) && isEmpty(secretAccessKey)) {
+      core.setFailed('Input "secret-access-key" cannot be empty');
     }
-    core.info(`Logging into Nullplatform...`);
-    const { token } = await client.post('login', { client_id: clientId, refresh_token: clientSecret });
+    if (isEmpty(accessToken)) {
+      core.setFailed('Input "access-token" cannot be empty');
+    }
+
+    core.info(`Logging into Nullplatform using ${ isEmpty(accessToken) ? 'credentials' : 'access token' }...`);
+
+    const body = {};
+    if (!isEmpty(accessToken)) {
+      body['access_token'] = accessToken;
+    } else {
+      body['access_key'] = accessKey;
+      body['secret_access_key'] = secretAccessKey;
+    }
+
+    const { token } = await client.post('login', body);
+
     if (isEmpty(token)) {
       core.setFailed('Output "token" cannot be empty');
     }
+
+    core.info('Successfully logged in into Nullplatform');
+
     core.exportVariable(TOKEN_VARIABLE_NAME, token);
   } catch (error) {
     core.setFailed(`Login failed: ${error.message}`);
