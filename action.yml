@@ -1,13 +1,15 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: "Nullplatform Login"
+description: "Github Action to automate the login process on Nullplatform"
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
-    required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  access-key:
+    description: "access key"
+    required: false
+  secret-access-key:
+    description: "secret access key"
+    required: false
+  access-token:
+    description: "encoded access token"
+    required: false
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/index.js"
