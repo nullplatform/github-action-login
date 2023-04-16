@@ -1,7 +1,7 @@
 # Nullplatform Login GitHub Action
 
 <p align="center">
-  <a href="https://github.com/actions/javascript-action/actions"><img alt="javscript-action status" src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"></a>
+  <a href="https://github.com/nullplatform/github-action-login/actions"><img alt="javscript-action status" src="https://github.com/nullplatform/github-action-login/workflows/units-test/badge.svg"></a>
 </p>
 
 You can use the GitHub Action to automate the login process on Nullplatform.
@@ -100,9 +100,9 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 You can now consume the action by referencing the v1 branch
 
 ```yaml
-uses: actions/javascript-action@v1
+uses: nullplatform/github-action-login@v1
 with:
-  milliseconds: 1000
+  access-token: ${{ secrets.NULLPLATFORM_ACCESS_TOKEN }}
 ```
 
 See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
