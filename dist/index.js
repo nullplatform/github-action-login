@@ -2831,6 +2831,9 @@ const config = __nccwpck_require__(570);
 class HttpClient {
     constructor() {
         this.client = new http.HttpClient();
+        this.client.requestOptions = {
+            headers: { [http.Headers.ContentType]: 'application/json' }
+        }
         this.baseUrl = config.baseUrl;
     }
 
