@@ -27,14 +27,18 @@ async function run() {
       core.setFailed('Input "access-token" cannot be empty');
     }
 
-    core.info(`Logging into Nullplatform using ${ isEmpty(accessToken) ? 'credentials' : 'access token' }...`);
+    core.info(
+      `Logging into Nullplatform using ${
+        isEmpty(accessToken) ? 'credentials' : 'access token'
+      }...`,
+    );
 
     const body = {};
     if (!isEmpty(accessToken)) {
-      body['access_token'] = accessToken;
+      body.access_token = accessToken;
     } else {
-      body['access_key'] = accessKey;
-      body['secret_access_key'] = secretAccessKey;
+      body.access_key = accessKey;
+      body.secret_access_key = secretAccessKey;
     }
 
     const { token } = await client.post('login', body);

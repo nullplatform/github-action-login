@@ -1,23 +1,28 @@
 const process = require('process');
 const cp = require('child_process');
 const path = require('path');
+const dotenv = require('dotenv');
 
-test('throws invalid number', async () => {
-  //await expect(wait('foo')).rejects.toThrow('milliseconds not a number');
-});
-
-test('wait 500 ms', async () => {
-  const start = new Date();
-  //await wait(500);
-  const end = new Date();
-  var delta = Math.abs(end - start);
-  expect(delta).toBeGreaterThanOrEqual(0);
-});
-
+dotenv.config();
 // shows how the runner will run a javascript action with env / stdout protocol
-test('test runs', () => {
-  process.env['INPUT_TOKEN'] = '';
+test('test runs correctly for valid access token', () => {
+  process.env['INPUT_ACCESS-TOKEN'] = process.env.ACCESS_TOKEN;
   const ip = path.join(__dirname, 'index.js');
   const result = cp.execSync(`node ${ip}`, { env: process.env }).toString();
-  console.log(result);
-})
+  expect(result).toContain('NULLPLATFORM_ACCESS_TOKEN');
+});
+
+test('test fails for invalid access token', () => {
+  process.env['INPUT_ACCESS-TOKEN'] = '123456';
+  const ip = path.join(__dirname, 'index.js');
+  expect(() => cp.execSync(`node ${ip}`, { env: process.env })).toThrowError(
+    /Command failed/,
+  );
+});
+
+test('test fails for missing access token', () => {
+  const ip = path.join(__dirname, 'index.js');
+  expect(() => cp.execSync(`node ${ip}`, { env: process.env })).toThrowError(
+    /Command failed/,
+  );
+});

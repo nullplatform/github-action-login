@@ -1,8 +1,7 @@
 class Validate {
-
-    static isEmpty(string) {
-        return !string;
-    }
+  static isEmpty(string) {
+    return !string;
+  }
 }
 
 module.exports = Validate;
