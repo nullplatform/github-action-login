@@ -49,6 +49,7 @@ async function run() {
 
     core.info('Successfully logged in into Nullplatform');
 
+    core.setSecret(token);
     core.exportVariable(TOKEN_VARIABLE_NAME, token);
   } catch (error) {
     core.setFailed(`Login failed: ${error.message}`);

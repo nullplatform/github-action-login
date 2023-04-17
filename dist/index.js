@@ -2837,16 +2837,17 @@ class HttpClient {
     this.baseUrl = config.baseUrl;
   }
 
-  async post(url, body) {
+  async post(path, body) {
+    const url = `${this.baseUrl}/${path}`;
     const data = JSON.stringify(body);
-    const response = await this.client.post(`${this.baseUrl}/${url}`, data);
+    const response = await this.client.post(url, data);
     const { statusCode, statusMessage } = response.message;
+    const result = await response.readBody();
     if (statusCode !== 200) {
       throw new Error(
-        `POST to ${url} failed: [${statusCode}] ${statusMessage}`,
+        `POST to ${path} failed: [${statusCode}] ${statusMessage} - ${result}`,
       );
     }
-    const result = await response.readBody();
     return JSON.parse(result);
   }
 }
@@ -3070,6 +3071,7 @@ async function run() {
 
     core.info('Successfully logged in into Nullplatform');
 
+    core.setSecret(token);
     core.exportVariable(TOKEN_VARIABLE_NAME, token);
   } catch (error) {
     core.setFailed(`Login failed: ${error.message}`);
