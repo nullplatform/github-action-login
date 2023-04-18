@@ -11,7 +11,7 @@ test('test runs correctly for valid access token', () => {
     const result = cp.execSync(`node ${ip}`, { env: process.env }).toString();
     expect(result).toContain('NULLPLATFORM_ACCESS_TOKEN');
   } catch (err) {
-    console.log(err.message);
+    expect.fail(err.message);
   }
 });
 

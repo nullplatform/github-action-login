@@ -7,9 +7,12 @@ inputs:
   secret-access-key:
     description: "secret access key"
     required: false
-  access-token:
-    description: "encoded access token"
+  token:
+    description: "encoded nullplatform token"
     required: false
+outputs:
+  access-token:
+    description: "The nullplatform access token"
 runs:
   using: "node16"
   main: "dist/index.js"

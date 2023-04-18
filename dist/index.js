@@ -2869,6 +2869,32 @@ module.exports = config;
 
 /***/ }),
 
+/***/ 456:
+/***/ ((module) => {
+
+const Input = Object.freeze({
+  TOKEN: 'token',
+  ACCESS_KEY: 'access-key',
+  SECRET_ACCESS_KEY: 'secret-access-key',
+});
+
+const Output = Object.freeze({
+  ACCESS_TOKEN: 'access-token',
+});
+
+const Variable = Object.freeze({
+  NULLPLATFORM_ACCESS_TOKEN: 'NULLPLATFORM_ACCESS_TOKEN',
+});
+
+module.exports = {
+  Input,
+  Output,
+  Variable,
+};
+
+
+/***/ }),
+
 /***/ 2:
 /***/ ((module) => {
 
@@ -3024,57 +3050,64 @@ const dotenv = __nccwpck_require__(437);
 const core = __nccwpck_require__(186);
 const HttpClient = __nccwpck_require__(349);
 const { isEmpty } = __nccwpck_require__(2);
+const { Variable, Input, Output } = __nccwpck_require__(456);
 
 dotenv.config();
 
-const TOKEN_VARIABLE_NAME = 'NULLPLATFORM_ACCESS_TOKEN';
+const inputToKey = (input) => (!isEmpty(input) ? input.replace(/-/g, '_') : null);
+
+const setFailed = (error) => {
+  core.setFailed(error);
+  process.exit(1);
+};
 
 async function run() {
   try {
     const client = new HttpClient();
 
-    const accessKey = core.getInput('access-key');
-    const secretAccessKey = core.getInput('secret-access-key');
-    const accessToken = core.getInput('access-token');
+    const accessKey = core.getInput(Input.ACCESS_KEY);
+    const secretAccessKey = core.getInput(Input.SECRET_ACCESS_KEY);
+    const token = core.getInput(Input.TOKEN);
 
     core.info('Validating inputs...');
 
-    if (isEmpty(accessToken) && isEmpty(accessKey)) {
-      core.setFailed('Input "access-key" cannot be empty');
+    if (isEmpty(token) && isEmpty(accessKey)) {
+      setFailed(`Input "${Input.ACCESS_KEY}" cannot be empty`);
     }
-    if (isEmpty(accessToken) && isEmpty(secretAccessKey)) {
-      core.setFailed('Input "secret-access-key" cannot be empty');
+    if (isEmpty(token) && isEmpty(secretAccessKey)) {
+      setFailed(`Input "${Input.SECRET_ACCESS_KEY}" cannot be empty`);
     }
-    if (isEmpty(accessToken)) {
-      core.setFailed('Input "access-token" cannot be empty');
+    if (isEmpty(token)) {
+      setFailed(`Input "${Input.TOKEN}" cannot be empty`);
     }
 
     core.info(
       `Logging into Nullplatform using ${
-        isEmpty(accessToken) ? 'credentials' : 'access token'
+        isEmpty(token) ? 'credentials' : 'token'
       }...`,
     );
 
     const body = {};
-    if (!isEmpty(accessToken)) {
-      body.access_token = accessToken;
+    if (!isEmpty(token)) {
+      body[inputToKey(Input.TOKEN)] = token;
     } else {
-      body.access_key = accessKey;
-      body.secret_access_key = secretAccessKey;
+      body[inputToKey(Input.ACCESS_KEY)] = accessKey;
+      body[inputToKey(Input.SECRET_ACCESS_KEY)] = secretAccessKey;
     }
 
-    const { token } = await client.post('login', body);
+    const { access_token: accessToken } = await client.post('login', body);
 
-    if (isEmpty(token)) {
-      core.setFailed('Output "token" cannot be empty');
+    if (isEmpty(accessToken)) {
+      setFailed(`Output "${Output.ACCESS_TOKEN}" cannot be empty`);
     }
 
     core.info('Successfully logged in into Nullplatform');
 
-    core.setSecret(token);
-    core.exportVariable(TOKEN_VARIABLE_NAME, token);
+    core.setSecret(accessToken);
+    core.setOutput(Output.ACCESS_TOKEN, accessToken);
+    core.exportVariable(Variable.NULLPLATFORM_ACCESS_TOKEN, accessToken);
   } catch (error) {
-    core.setFailed(`Login failed: ${error.message}`);
+    setFailed(`Login failed: ${error.message}`);
   }
 }
 
