@@ -17,4 +17,4 @@ fi
 
 # Push the Git tags to GitHub
 git push origin "$VERSION"
-git push origin "$MAJOR_VERSION"
+git push origin "$MAJOR_VERSION" --force
