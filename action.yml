@@ -4,11 +4,17 @@ inputs:
   access-key:
     description: "access key"
     required: false
+    deprecationMessage: "this is not implemented yet"
   secret-access-key:
     description: "secret access key"
     required: false
+    deprecationMessage: "this is not implemented yet"
   token:
     description: "encoded nullplatform token"
+    required: false
+    deprecationMessage: "*token* input is deprecated, use *api-key* instead"
+  api-key:
+    description: "nullplatform api key"
     required: false
 outputs:
   access-token:

@@ -4,7 +4,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 
 dotenv.config();
-// shows how the runner will run a javascript action with env / stdout protocol
+
 test('test runs correctly for valid access token', () => {
   const ip = path.join(__dirname, 'index.js');
   try {
@@ -16,7 +16,7 @@ test('test runs correctly for valid access token', () => {
 });
 
 test('test fails for invalid access token', () => {
-  process.env['INPUT_ACCESS-TOKEN'] = '123456';
+  process.env.INPUT_TOKEN = '123456';
   const ip = path.join(__dirname, 'index.js');
   expect(() => cp.execSync(`node ${ip}`, { env: process.env })).toThrowError(
     /Command failed/,

@@ -1,5 +1,6 @@
 const Input = Object.freeze({
   TOKEN: 'token',
+  API_KEY: 'api-key',
   ACCESS_KEY: 'access-key',
   SECRET_ACCESS_KEY: 'secret-access-key',
 });

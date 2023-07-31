@@ -102,7 +102,8 @@ You can now consume the action by referencing the v1 branch
 ```yaml
 uses: nullplatform/github-action-login@v1
 with:
-  access-token: ${{ secrets.NULLPLATFORM_ACCESS_TOKEN }}
+  api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
+  access-token: ${{ secrets.NULLPLATFORM_ACCESS_TOKEN }} # Deprecated, use *api-key* instead
 ```
 
 See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
