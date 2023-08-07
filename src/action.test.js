@@ -66,14 +66,13 @@ describe('login action test', () => {
     expect(mockSetFailed).not.toHaveBeenCalled();
   });
 
-  it('should log in with a token and set outputs 2', async () => {
-    // HttpClient.prototype.post = jest.fn().mockResolvedValue({ access_token: mockAccessToken });
+  it('should log in with a api key and set outputs', async () => {
     // Set up the input
-    const mockToken = 'mock_token';
+    const apiKey = 'mock_api_key';
 
     // Mock the inputs
     const mockInputs = {
-      [Input.TOKEN]: mockToken,
+      [Input.API_KEY]: apiKey,
     };
 
     // Mock the getInput function
@@ -84,7 +83,7 @@ describe('login action test', () => {
 
     // Check if the HttpClient.post method was called with the correct arguments
     expect(HttpClient.prototype.post).toHaveBeenCalledWith('login', {
-      token: mockToken,
+      api_key: apiKey,
     });
 
     // Check if the core functions were called with the expected arguments
@@ -110,5 +109,4 @@ describe('login action test', () => {
     expect(mockSetFailed).toHaveBeenCalledWith('Input "access-key" and "secret-access-key" cannot be empty');
     expect(mockExit).toHaveBeenCalledWith(1);
   });
-
 });
