@@ -11,7 +11,7 @@ jobs:
   units:
     runs-on: ubuntu-latest
     env:
-      INPUT_API_KEY: ${{ secrets.NULLPLATFORM_API_KEY }}
+      INPUT_API-KEY: ${{ secrets.NULLPLATFORM_API_KEY }}
     steps:
       - uses: actions/checkout@v3
       - run: npm ci

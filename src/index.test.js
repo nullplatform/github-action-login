@@ -16,14 +16,15 @@ test('test runs correctly for valid access token', () => {
 });
 
 test('test fails for invalid access token', () => {
-  process.env.INPUT_TOKEN = '123456';
+  process.env['INPUT_API-KEY'] = '123456';
   const ip = path.join(__dirname, 'index.js');
   expect(() => cp.execSync(`node ${ip}`, { env: process.env })).toThrowError(
     /Command failed/,
   );
 });
 
-test('test fails for missing access token', () => {
+test('test fails for missing api key', () => {
+  process.env['INPUT_API-KEY'] = undefined;
   const ip = path.join(__dirname, 'index.js');
   expect(() => cp.execSync(`node ${ip}`, { env: process.env })).toThrowError(
     /Command failed/,
