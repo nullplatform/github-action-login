@@ -43,7 +43,7 @@ jobs:
       
     - name: Login to Nullplatform
       id: login
-      uses: your-org/nullplatform-login-action@v1
+      uses: nullplatform/nullplatform-login-action@v1
       with:
         api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
         
