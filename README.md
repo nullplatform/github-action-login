@@ -12,6 +12,13 @@
 
 The "Nullplatform Login" GitHub Action automates the login process for Nullplatform, allowing you to securely access Nullplatform services within your workflows. It provides a convenient way to authenticate and obtain an access token for use in subsequent steps.
 
+## Table of Contents
+
+- [Inputs](#inputs)
+- [Outputs](#outputs)
+- [Usage](#usage)
+- [License](#license)
+
 ## Inputs
 
 ### `api-key`
