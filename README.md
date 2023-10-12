@@ -50,7 +50,7 @@ jobs:
       
     - name: Login to Nullplatform
       id: login
-      uses: nullplatform/nullplatform-login-action@v1
+      uses: nullplatform/github-action-login@v1
       with:
         api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
         
