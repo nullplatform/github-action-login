@@ -55,7 +55,7 @@ jobs:
         api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
         
     - name: Use Access Token
-      run: echo "Access Token: ${{ steps.login.outputs.access-token }}"
+      run: echo "Access Token ${{ steps.login.outputs.access-token }}"
 ```
 
 In this example, the GitHub Action logs in to Nullplatform using the provided API key and retrieves the access token, which can be used in subsequent steps.
