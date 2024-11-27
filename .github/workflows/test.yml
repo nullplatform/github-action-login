@@ -13,7 +13,7 @@ jobs:
     env:
       INPUT_API-KEY: ${{ secrets.NULLPLATFORM_API_KEY }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: npm ci
       - run: npm test
 
@@ -21,7 +21,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./
         with:
           api-key: ${{ secrets.NULLPLATFORM_API_KEY }}
