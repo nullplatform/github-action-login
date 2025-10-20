@@ -3141,6 +3141,8 @@ class HttpClient {
     this.client = new http.HttpClient();
     this.client.requestOptions = {
       headers: { [http.Headers.ContentType]: 'application/json' },
+      allowRetries: true,
+      maxRetries: 3,
     };
     this.baseUrl = config.baseUrl;
   }
