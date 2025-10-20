@@ -3138,12 +3138,11 @@ const config = __nccwpck_require__(570);
 
 class HttpClient {
   constructor() {
-    this.client = new http.HttpClient('np-gh-action-login', [], {
-      allowRetries: true,
-      maxRetries: 3,
-    });
+    this.client = new http.HttpClient();
     this.client.requestOptions = {
       headers: { [http.Headers.ContentType]: 'application/json' },
+      allowRetries: true,
+      maxRetries: 3,
     };
     this.baseUrl = config.baseUrl;
   }
