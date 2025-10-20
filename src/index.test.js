@@ -7,12 +7,8 @@ dotenv.config();
 
 test('test runs correctly for valid access token', () => {
   const ip = path.join(__dirname, 'index.js');
-  try {
-    const result = cp.execSync(`node ${ip}`, { env: process.env }).toString();
-    expect(result).toContain('NULLPLATFORM_ACCESS_TOKEN');
-  } catch (err) {
-    expect.fail(err.message);
-  }
+  const result = cp.execSync(`node ${ip}`, { env: process.env }).toString();
+  expect(result).toContain('NULLPLATFORM_ACCESS_TOKEN');
 });
 
 test('test fails for invalid access token', () => {
