@@ -3138,7 +3138,10 @@ const config = __nccwpck_require__(570);
 
 class HttpClient {
   constructor() {
-    this.client = new http.HttpClient();
+    this.client = new http.HttpClient('np-gh-action-login', [], {
+      allowRetries: true,
+      maxRetries: 3,
+    });
     this.client.requestOptions = {
       headers: { [http.Headers.ContentType]: 'application/json' },
     };
